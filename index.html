@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLEAR FLEET - Recruitment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #020b1a;
+            --accent: #00d4ff;
+            --white: #ffffff;
+            --success: #2ecc71;
+            --error: #e74c3c;
+        }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--primary);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* زر تبديل اللغة العائم */
+        .lang-toggle {
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            background: var(--accent); color: #000; border: none;
+            padding: 12px 25px; border-radius: 50px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(0,212,255,0.4);
+        }
+
+        .page { display: none; animation: fadeIn 0.6s ease; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* قسم ياماتو (الواجهة الرئيسية) */
+        .hero {
+            background-color: #05162d;
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(2, 11, 26, 1)), 
+                              url('https://images.alphacoders.com/610/610669.jpg');
+            background-size: cover; background-position: center;
+            height: 85vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            border-bottom: 5px solid var(--accent);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 5.5rem); color: var(--accent);
+            text-shadow: 0 0 25px rgba(0, 212, 255, 0.8); margin: 0;
+            letter-spacing: 5px; font-family: sans-serif;
+        }
+
+        .hero p { font-size: 1.5rem; margin-top: 15px; opacity: 0.9; }
+
+        /* شريط الإحصائيات */
+        .stats-bar {
+            display: flex; justify-content: center; gap: 15px;
+            margin-top: -50px; padding: 0 10px;
+        }
+
+        .stat-card {
+            background: rgba(15, 23, 42, 0.95); padding: 20px;
+            border-radius: 15px; border: 1px solid var(--accent);
+            flex: 1; max-width: 140px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .stat-card h3 { color: var(--accent); margin: 0; font-size: 1.5rem; }
+        .stat-card p { font-size: 0.8rem; margin: 5px 0 0 0; color: #94a3b8; }
+
+        /* قسم ميزوري (التجنيد) */
+        .recruit-section {
+            background-color: #05162d;
+            background-image: linear-gradient(rgba(2, 11, 26, 0.85), rgba(2, 11, 26, 0.85)), 
+                              url('https://images6.alphacoders.com/652/652225.jpg');
+            background-size: cover; background-position: center;
+            padding: 80px 20px; margin-top: 50px;
+        }
+
+        .form-box {
+            max-width: 550px; margin: auto;
+            background: rgba(10, 25, 47, 0.98); padding: 35px;
+            border-radius: 20px; border: 1px solid #334155;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+
+        .form-box h2 { color: var(--accent); text-align: center; margin-bottom: 30px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        input, select, textarea {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            background: #020b1a; border: 1px solid #1e293b;
+            color: white; border-radius: 8px; box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            background: var(--accent); color: #000; padding: 16px;
+            width: 100%; border: none; border-radius: 8px;
+            font-weight: bold; font-size: 1.2rem; cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:disabled { background: #555; cursor: not-allowed; }
+
+        /* رسائل الحالة */
+        .status-msg {
+            display: none; padding: 15px; margin-bottom: 20px;
+            border-radius: 8px; font-weight: bold; text-align: center;
+        }
+        .success-bg { background: var(--success); color: white; }
+        .error-bg { background: var(--error); color: white; }
+
+        footer { padding: 50px; text-align: center; opacity: 0.5; font-size: 0.9rem; }
+        html[dir="ltr"] .lang-toggle { right: auto; left: 20px; }
+    </style>
+</head>
+<body>
+
+    <button class="lang-toggle" id="langBtn" onclick="toggleLang()">English</button>
+
+    <!-- الصفحة العربية -->
+    <div id="arPage" class="page active">
+        <div class="hero">
+            <h1>CLEAR FLEET</h1>
+            <p>وضوح في الرؤية.. قوة في الأداء</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-card"><h3>32/40</h3><p>الأعضاء</p></div>
+            <div class="stat-card"><h3>Active</h3><p>الحالة</p></div>
+            <div class="stat-card"><h3>+50k</h3><p>النفط</p></div>
+        </div>
+
+        <section class="recruit-section">
+            <div class="form-box">
+                <div id="ar-success" class="status-msg success-bg">شكراً لك! تم إرسال طلبك للقائد بنجاح.</div>
+                <div id="ar-error" class="status-msg error-bg">عذراً، حدث خطأ أثناء الإرسال.</div>
+
+                <form id="ar-form">
+                    <h2>طلب انضمام</h2>
+                    <input type="text" name="name" placeholder="الاسم في اللعبة (Gamertag)" required data-fs-field>
+                    
+                    <div class="form-grid">
+                        <input type="text" name="win_rate" placeholder="Win Rate (%)" required data-fs-field>
+                        <input type="text" name="kd" placeholder="K/D Ratio" required data-fs-field>
+                    </div>
+
+                    <input type="number" name="battles" placeholder="عدد معارك الـ Standard" required data-fs-field>
+                    
+                    <select name="platform" data-fs-field>
+                        <option value="PlayStation">PlayStation</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="Mobile">Mobile</option>
+                    </select>
+
+                    <textarea name="message" rows="3" placeholder="لماذا تود الانضمام لأسطولنا؟" data-fs-field></textarea>
+                    
+                    <button type="submit" class="submit-btn" data-fs-submit-btn>إرسال الطلب</button>
+                </form>
+            </div>
+        </section>
+        <footer>© 2024 CLEAR FLEET - جميع الحقوق محفوظة</footer>
+    </div>
+
+    <!-- الصفحة الإنجليزية -->
+    <div id="enPage" class="page">
+        <div class="hero">
+            <h1>CLEAR FLEET</h1>
+            <p>Clear Vision.. Superior Power</p>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-card"><h3>32/40</h3><p>Members</p></div>
+            <div class="stat-card"><h3>Active</h3><p>Status</p></div>
+            <div class="stat-card"><h3>+50k</h3><p>Oil</p></div>
+        </div>
+
+        <section class="recruit-section">
+            <div class="form-box">
+                <div id="en-success" class="status-msg success-bg">Thank you! Your application has been sent.</div>
+                <div id="en-error" class="status-msg error-bg">Oops! Something went wrong.</div>
+
+                <form id="en-form">
+                    <h2>Join The Fleet</h2>
+                    <input type="text" name="name" placeholder="In-Game Name (Gamertag)" required data-fs-field>
+                    
+                    <div class="form-grid">
+                        <input type="text" name="win_rate" placeholder="Win Rate (%)" required data-fs-field>
+                        <input type="text" name="kd" placeholder="K/D Ratio" required data-fs-field>
+                    </div>
+
+                    <input type="number" name="battles" placeholder="Standard Battles Count" required data-fs-field>
+                    
+                    <select name="platform" data-fs-field>
+                        <option value="PlayStation">PlayStation</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="Mobile">Mobile</option>
+                    </select>
+
+                    <textarea name="message" rows="3" placeholder="Why join CLEAR FLEET?" data-fs-field></textarea>
+                    
+                    <button type="submit" class="submit-btn" data-fs-submit-btn>Send Application</button>
+                </form>
+            </div>
+        </section>
+        <footer>© 2024 CLEAR FLEET - All Rights Reserved</footer>
+    </div>
+
+    <!-- البرمجيات (AJAX & Language Switch) -->
+    <script>
+        // تهيئة Formspree
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        
+        // ربط النموذج العربي
+        formspree('initForm', { 
+            formElement: '#ar-form', 
+            formId: 'moeqvgvz',
+            onSuccess: function() {
+                document.getElementById('ar-form').style.display = 'none';
+                document.getElementById('ar-success').style.display = 'block';
+            }
+        });
+
+        // ربط النموذج الإنجليزي
+        formspree('initForm', { 
+            formElement: '#en-form', 
+            formId: 'moeqvgvz',
+            onSuccess: function() {
+                document.getElementById('en-form').style.display = 'none';
+                document.getElementById('en-success').style.display = 'block';
+            }
+        });
+
+        // وظيفة تبديل اللغة
+        function toggleLang() {
+            const ar = document.getElementById('arPage');
+            const en = document.getElementById('enPage');
+            const btn = document.getElementById('langBtn');
+            const html = document.getElementById('mainHtml');
+
+            if (ar.classList.contains('active')) {
+                ar.classList.remove('active'); en.classList.add('active');
+                btn.innerText = "العربية"; html.dir = "ltr"; html.lang = "en";
+                btn.style.right = "auto"; btn.style.left = "20px";
+            } else {
+                en.classList.remove('active'); ar.classList.add('active');
+                btn.innerText = "English"; html.dir = "rtl"; html.lang = "ar";
+                btn.style.left = "auto"; btn.style.right = "20px";
+            }
+            window.scrollTo(0, 0);
+        }
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+</body>
+</html>
